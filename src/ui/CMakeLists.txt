@@ -26,5 +26,5 @@ set_target_properties(lifegameX PROPERTIES
 )
 
 target_link_libraries(lifegameX
-    PRIVATE Qt6::Quick
+    PRIVATE Qt6::Quick lifegame
 )
