@@ -16,7 +16,8 @@ qt_add_qml_module(lifegameX
     URI lgX
     VERSION 1.0
     QML_FILES
-        Main.qml
+        qml/Main.qml
+        qml/CellGrid.qml
 )
 set_target_properties(lifegameX PROPERTIES
 #    MACOSX_BUNDLE_GUI_IDENTIFIER icu.kyanch.lifegameX
