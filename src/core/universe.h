@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 
 enum Cell { Dead = 0, Alive = 1 };
 
