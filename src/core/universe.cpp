@@ -1,6 +1,7 @@
 #include "universe.h"
 
 #include <cstddef>
+#include <array>
 
 using std::size_t;
 
