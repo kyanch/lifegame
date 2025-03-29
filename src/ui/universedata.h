@@ -18,11 +18,11 @@ class UniverseData : public QAbstractListModel {
   }
   QVariant data(const QModelIndex& index,
                 int role = Qt::DisplayRole) const override {
-    return QVariant(universe.get(index.row()));
+    return QVariant(universe[index.row()]);
   }
   bool setData(const QModelIndex& index, const QVariant& value,
                int role = Qt::EditRole) override {
-    universe.set(index.row(), value.value<Cell>());
+    universe[index.row()] = value.value<Cell>();
     return true;
   }
   Qt::ItemFlags flags(const QModelIndex& index) const override {
