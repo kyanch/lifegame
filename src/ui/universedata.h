@@ -1,5 +1,6 @@
 #pragma once
 
+#include <qtmetamacros.h>
 #include <QAbstractListModel>
 
 #include "universe.h"
@@ -8,29 +9,19 @@
 class UniverseData : public QAbstractListModel {
   Q_OBJECT
  public:
-  explicit UniverseData(std::size_t size, QObject* parent = nullptr)
-      : QAbstractListModel(parent), universe(size) {}
-  Q_INVOKABLE size_t columns() const { return universe.get_width(); }
-  Q_INVOKABLE size_t rows() const { return universe.get_height(); }
+  explicit UniverseData(std::size_t size, QObject* parent = nullptr);
+  Q_INVOKABLE size_t columns() const;
+  Q_INVOKABLE size_t rows() const;
 
-  int rowCount(const QModelIndex& parent) const override {
-    return columns() * rows();
-  }
+  int rowCount(const QModelIndex& parent=QModelIndex()) const override;
   QVariant data(const QModelIndex& index,
-                int role = Qt::DisplayRole) const override {
-    return QVariant(universe[index.row()]);
-  }
+                int role = Qt::DisplayRole) const override;
   bool setData(const QModelIndex& index, const QVariant& value,
-               int role = Qt::EditRole) override {
-    universe[index.row()] = value.value<Cell>();
-    return true;
-  }
-  Qt::ItemFlags flags(const QModelIndex& index) const override {
-    return Qt::ItemIsEditable;
-  }
+               int role = Qt::EditRole) override;
+  Qt::ItemFlags flags(const QModelIndex& index) const override;
 
  public slots:
-  void tick() { universe.next(); }
+  void tick() ;
 
  private:
   Universe universe;

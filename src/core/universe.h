@@ -8,6 +8,7 @@
 #include <ostream>
 #include <string>
 #include <vector>
+#include <memory>
 
 enum Cell { Dead = 0, Alive = 1 };
 
