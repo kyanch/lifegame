@@ -23,20 +23,19 @@ Item {
                 model: root.model
 
                 Rectangle {
-                    id: cell
-                    required property int modelData
+                    required property int cell
                     required property int index
                     width: 40
                     height: 40
-                    color: modelData === 1 ? "black" : "cyan"
+                    color: cell == 1 ? "black" : "cyan"
                     Text {
-                        text: cell.index
+                        text: parent.cell
                     }
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            console.log("Rectangle " + cell.index + " clicked!");
-                            cell.modelData = !cell.modelData;
+                            console.log("Rectangle " + parent.index + " clicked!");
+                            root.model.set_cell(parent.index, parent.cell ? 0 : 1);
                         }
                     }
                 }

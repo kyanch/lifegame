@@ -1,7 +1,9 @@
 #pragma once
 
-#include <qtmetamacros.h>
+#include <QHash>
+#include <QVariant>
 #include <QAbstractListModel>
+#include <cstddef>
 
 #include "universe.h"
 
@@ -12,8 +14,16 @@ class UniverseData : public QAbstractListModel {
   explicit UniverseData(std::size_t size, QObject* parent = nullptr);
   Q_INVOKABLE size_t columns() const;
   Q_INVOKABLE size_t rows() const;
+  Q_INVOKABLE bool set_cell(const int index, int value) {
+    return setData(createIndex(index, 1), (Cell)value);
+  }
 
-  int rowCount(const QModelIndex& parent=QModelIndex()) const override;
+  QHash<int, QByteArray> roleNames() const override {
+    QHash<int, QByteArray> roles;
+    roles[Qt::DisplayRole] = "cell";
+    return roles;
+  }
+  int rowCount(const QModelIndex& parent = QModelIndex()) const override;
   QVariant data(const QModelIndex& index,
                 int role = Qt::DisplayRole) const override;
   bool setData(const QModelIndex& index, const QVariant& value,
@@ -21,7 +31,7 @@ class UniverseData : public QAbstractListModel {
   Qt::ItemFlags flags(const QModelIndex& index) const override;
 
  public slots:
-  void tick() ;
+  void tick();
 
  private:
   Universe universe;

@@ -1,14 +1,14 @@
 #include "universedata.h"
 
-#include <qabstractitemmodel.h>
-#include <qnamespace.h>
-#include <qtmetamacros.h>
-#include <qvariant.h>
+
+#include <algorithm>
 
 #include "universe.h"
 
 UniverseData::UniverseData(std::size_t size, QObject* parent)
-    : universe(size), QAbstractListModel(parent) {}
+    : universe(size), QAbstractListModel(parent) {
+  std::fill(universe.begin(), universe.end(), Alive);
+}
 
 Q_INVOKABLE size_t UniverseData::columns() const {
   return universe.get_width();
@@ -20,11 +20,11 @@ int UniverseData::rowCount(const QModelIndex& parent) const {
   return universe.get_height() * universe.get_width();
 }
 QVariant UniverseData::data(const QModelIndex& index, int role) const {
-  return QVariant(universe[index.row()]);
+  return QVariant((int)universe[index.row()]);
 }
 bool UniverseData::setData(const QModelIndex& index, const QVariant& value,
                            int role) {
-  universe[index.row()] = value.value<Cell>();
+  universe[index.row()] = (Cell)value.value<int>();
   emit dataChanged(index, index);
   return true;
 }
