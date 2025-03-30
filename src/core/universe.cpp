@@ -25,6 +25,8 @@ static int conv2d_op(const Cell* row1, const Cell* row2, const Cell* row3,
      row3[-1]*kernel[6]+row3[0]*kernel[7]+row3[1]*kernel[8];
   // clang-format on
 }
+
+/* Get Cell from the result of convolution */
 static Cell update_cell_with_status(int status) {
   if (AM_I_ALIVE(status)) {
     if (2 == NEIGHBOR_COUNT(status) || 3 == NEIGHBOR_COUNT(status)) {
@@ -72,6 +74,7 @@ void Universe::compute_next() {
       int status = conv2d_op(row1 + j, row2 + j, row3 + j, CONV_KERNEL);
       target_iter[j] = update_cell_with_status(status);
     }
+    /* Target is not padded, add width only*/
     target_iter += width;
     row1 = row2, row2 = row3, row3 = row3 + full_width;
   }
