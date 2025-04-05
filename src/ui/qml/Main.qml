@@ -33,6 +33,12 @@ ApplicationWindow {
 
         Column {
             spacing: 10
+            Button {
+                text: "Clear"
+                onClicked: {
+                    universe.clear();
+                }
+            }
 
             Button {
                 text: universe_tick.running ? "Stop" : "Run"

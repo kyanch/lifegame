@@ -4,12 +4,15 @@ cmake_minimum_required(VERSION 3.21.1)
 find_package(Qt6 REQUIRED COMPONENTS Quick Core Widgets)
 
 set(QT_QML_GENERATE_QMLLS_INI ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 qt_standard_project_setup(REQUIRES 6.8)
 
 qt_add_executable(lifegameX
     main.cpp
     universedata.cpp
+    res/main.qrc
 )
 
 qt_add_qml_module(lifegameX

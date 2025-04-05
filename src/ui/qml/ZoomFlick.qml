@@ -22,7 +22,7 @@ Flickable {
         anchors.fill: parent
 
         model: universe
-        cellSize: 20
+        cellSize: 15
     }
     WheelHandler {}
     PinchArea {

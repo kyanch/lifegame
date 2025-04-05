@@ -13,6 +13,9 @@ UniverseData::UniverseData(std::size_t size, QObject* parent)
   std::fill(universe.begin(), universe.end(), Alive);
 }
 
+UniverseData::UniverseData(const Universe& uni, QObject* parent)
+    : universe(uni), QAbstractListModel(parent) {}
+
 Q_INVOKABLE size_t UniverseData::columns() const {
   return universe.get_width();
 }

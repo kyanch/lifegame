@@ -8,7 +8,6 @@
 #include <ostream>
 #include <string>
 #include <vector>
-#include <memory>
 
 enum Cell { Dead = 0, Alive = 1 };
 
@@ -25,15 +24,28 @@ class Universe {
   std::size_t height, width;
 
  public:
-  explicit Universe(std::size_t size) : Universe(size, size) {}
-  Universe(std::size_t height, std::size_t width)
+  explicit Universe(std::size_t size, Cell cell = Dead)
+      : Universe(size, size, cell) {}
+  Universe(std::size_t height, std::size_t width, Cell cell = Dead)
       : height(height),
         width(width),
         current_data(
-            std::make_unique<DataMatrix>(DataMatrix(height * width, Dead))),
+            std::make_unique<DataMatrix>(DataMatrix(height * width, cell))),
         next_data(
-            std::make_unique<DataMatrix>(DataMatrix(height * width, Dead))) {}
-
+            std::make_unique<DataMatrix>(DataMatrix(height * width, cell))) {}
+  Universe(const Universe& other) : Universe(other.height, other.width) {
+    // next_data should be ignored safely, just leave it default.
+    std::copy(other.current_data->begin(), other.current_data->end(),
+              current_data->begin());
+  }
+  Universe& operator=(const Universe& other) {
+    if (this == &other) return *this;
+    // Samely, next_data should be ignored safely, just leave it default.
+    this->current_data->resize(other.current_data->size());
+    std::copy(other.current_data->begin(), other.current_data->end(),
+              current_data->begin());
+    return *this;
+  }
   std::size_t get_height() const { return height; }
   std::size_t get_width() const { return width; }
 

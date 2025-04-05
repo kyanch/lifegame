@@ -1,0 +1,7 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/universe">
+        <file>default.txt</file>
+		<!--其他资源-->
+    </qresource>
+</RCC>
