@@ -1,7 +1,7 @@
 # Qt for mac require cmake 3.21.1, other platform require cmake 3.16
 cmake_minimum_required(VERSION 3.21.1)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick)
+find_package(Qt6 REQUIRED COMPONENTS Quick Core Widgets)
 
 set(QT_QML_GENERATE_QMLLS_INI ON)
 
@@ -29,5 +29,5 @@ set_target_properties(lifegameX PROPERTIES
 )
 
 target_link_libraries(lifegameX
-    PRIVATE Qt6::Quick lifegame
+    PRIVATE Qt6::Core Qt6::Widgets Qt6::Quick lifegame
 )

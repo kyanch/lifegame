@@ -1,7 +1,10 @@
+
 #include "universedata.h"
 
-
+#include <QFile>
+#include <QTextStream>
 #include <algorithm>
+#include <string>
 
 #include "universe.h"
 
@@ -35,4 +38,31 @@ Qt::ItemFlags UniverseData::flags(const QModelIndex& index) const {
 void UniverseData::tick() {
   universe.next();
   emit dataChanged(index(0), index(rowCount() - 1));
+}
+
+bool UniverseData::save_to_file(const QUrl& url) {
+  QFile file(url.toLocalFile());
+  if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+    qDebug() << "保存文件错误";
+    return false;
+  }
+
+  QTextStream out(&file);
+  out << static_cast<std::string>(universe).c_str();
+  file.close();
+  return true;
+}
+bool UniverseData::read_from_file(const QUrl& url) {
+  QFile file(url.toLocalFile());
+  if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    qDebug() << "文件读取错误";
+    return false;
+  }
+
+  QTextStream in(&file);
+  QString text = in.readAll();
+  universe = Universe(text.toStdString());
+  file.close();
+  emit dataChanged(index(0), index(rowCount() - 1));
+  return true;
 }

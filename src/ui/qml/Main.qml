@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Dialogs
 
 ApplicationWindow {
     width: 640
@@ -67,6 +68,53 @@ ApplicationWindow {
         running: false
         onTriggered: {
             universe.tick();
+        }
+    }
+    // Support File read&save.
+    FileDialog {
+        id: saveDialog
+        title: "保存到"
+        nameFilters: ["文本文件 (*.txt)", "所有文件 (*)"]
+        fileMode: FileDialog.SaveFile
+        onAccepted: {
+            console.log("选中文件: " + selectedFile);
+            universe.save_to_file(selectedFile);
+        }
+    }
+    FileDialog {
+        id: readDialog
+        title: "从文件中读取"
+        nameFilters: ["文本文件 (*.txt)", "所有文件 (*)"]
+        fileMode: FileDialog.OpenFile
+        onAccepted: {
+            console.log("选中文件: " + selectedFile);
+            universe.read_from_file(selectedFile);
+        }
+    }
+    DropArea {
+        anchors.fill: parent
+        onDropped: function (drop) {
+            if (drop.hasUrls) {
+                let file_url = drop.urls[0];
+                universe.read_from_file(file_url);
+            }
+        }
+    }
+    menuBar: MenuBar {
+        Menu {
+            title: qsTr("File")
+            Action {
+                text: qsTr("Open")
+                onTriggered: {
+                    readDialog.open();
+                }
+            }
+            Action {
+                text: qsTr("Save")
+                onTriggered: {
+                    saveDialog.open();
+                }
+            }
         }
     }
 }

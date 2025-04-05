@@ -1,8 +1,9 @@
 #pragma once
 
-#include <QHash>
-#include <QVariant>
 #include <QAbstractListModel>
+#include <QHash>
+#include <QUrl>
+#include <QVariant>
 #include <cstddef>
 
 #include "universe.h"
@@ -17,6 +18,8 @@ class UniverseData : public QAbstractListModel {
   Q_INVOKABLE bool set_cell(const int index, int value) {
     return setData(createIndex(index, 1), (Cell)value);
   }
+  Q_INVOKABLE bool save_to_file(const QUrl&);
+  Q_INVOKABLE bool read_from_file(const QUrl&);
 
   QHash<int, QByteArray> roleNames() const override {
     QHash<int, QByteArray> roles;
