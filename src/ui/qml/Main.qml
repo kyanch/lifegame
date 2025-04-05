@@ -2,25 +2,36 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-Window {
+ApplicationWindow {
     width: 640
     height: 480
     visible: true
     title: qsTr("Hello World")
 
+    footer: ToolBar {
+        ColumnLayout {
+            Text {
+                id: tooltip_text
+            }
+        }
+    }
+
     GridLayout {
         anchors.fill: parent
         anchors.centerIn: parent
 
-        CellGrid {
+        ZoomFlick {
+            id: zoom
             Layout.fillHeight: true
             Layout.fillWidth: true
 
-            message: "Hello"
-            model: universe
+            onMouseMoved: function (x, y) {
+                tooltip_text.text = Math.round(x, 2) + "," + Math.round(y, 2);
+            }
         }
+
         Column {
-            spacing: 20
+            spacing: 10
 
             Button {
                 text: universe_tick.running ? "Stop" : "Run"
@@ -38,6 +49,13 @@ Window {
                 onClicked: {
                     console.log("tick");
                     universe.tick();
+                }
+            }
+
+            Button {
+                text: "debug info"
+                onClicked: {
+                    console.log("");
                 }
             }
         }

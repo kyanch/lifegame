@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
 
   QQmlApplicationEngine engine;
 
-  UniverseData data(15);
+  UniverseData data(100);
 
   QObject::connect(
       &engine, &QQmlApplicationEngine::objectCreationFailed, &app,

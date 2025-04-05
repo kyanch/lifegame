@@ -18,6 +18,7 @@ qt_add_qml_module(lifegameX
     QML_FILES
         qml/Main.qml
         qml/CellGrid.qml
+        qml/ZoomFlick.qml
 )
 set_target_properties(lifegameX PROPERTIES
 #    MACOSX_BUNDLE_GUI_IDENTIFIER icu.kyanch.lifegameX
